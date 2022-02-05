@@ -7,8 +7,8 @@ from restapp.serializers import UserSerializer
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from restapp.models import Table
-from restapp.serializers import TableSerializer
+from restapp.models import Table,Reservation
+from restapp.serializers import TableSerializer,ReservationSerializer
 
 def index(request):
     return HttpResponse("Welcome to Rest4Health,  Your healthy restaurant!")
@@ -31,3 +31,12 @@ class TableDetail(generics.RetrieveDestroyAPIView):
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
+
+class ReservationList(generics.ListCreateAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+
+
+class ReservationDetail(generics.RetrieveDestroyAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer

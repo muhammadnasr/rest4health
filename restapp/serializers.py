@@ -1,7 +1,7 @@
 import imp
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from restapp.models import Table
+from restapp.models import Table,Reservation
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -14,3 +14,7 @@ class TableSerializer(serializers.ModelSerializer):
         model = Table
         fields = ['number', 'seats_count']
 
+class ReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ['table', 'timespan']
