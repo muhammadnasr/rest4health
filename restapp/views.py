@@ -14,6 +14,8 @@ from rest_framework.response import Response
 from psycopg2.extras import DateTimeRange
 from datetime import datetime
 from rest_framework import filters
+from django_filters import rest_framework as filters
+
 
 def index(request):
     return HttpResponse("Welcome to Rest4Health,  Your healthy restaurant!")
@@ -39,10 +41,21 @@ class TableDetail(generics.RetrieveDestroyAPIView):
     serializer_class = TableSerializer
 
 
+class TimespanFilter(filters.FilterSet):
+    timespan = filters.DateFromToRangeFilter()
+
+    class Meta:
+        model = Reservation
+        fields = [
+            "timespan",
+            "table",
+        ]
+
 class ReservationList(generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
-
+    filter_backends = [filters.DjangoFilterBackend]
+    filter_class = TimespanFilter
 
 class ReservationDetail(generics.RetrieveDestroyAPIView):
     queryset = Reservation.objects.all()
@@ -53,7 +66,7 @@ class ReservationAvailable(APIView):
 
     def get(self, request, seats_count, format=None):
         print("test print"+str(seats_count))
-        ordering_fields = ('timespan')
+        #ordering_fields = ('timespan')
         tables = Table.objects.filter(seats_count__lte=seats_count)
         print(tables)
         serializer = TableSerializer(tables, many=True)
