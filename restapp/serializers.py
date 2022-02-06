@@ -12,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class TableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Table
-        fields = ['number', 'seats_count']
+        fields = ['number', 'seats_count','reservation_set']
 
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:

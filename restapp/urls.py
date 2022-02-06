@@ -19,6 +19,7 @@ urlpatterns = [
 
     path('reservations/', views.ReservationList.as_view()),
     path('reservations/<int:pk>/', views.ReservationDetail.as_view()),
+    path('reservations/available/<int:seats_count>/', views.ReservationAvailable.as_view()),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
