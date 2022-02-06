@@ -13,8 +13,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from psycopg2.extras import DateTimeRange
 from datetime import datetime
-from rest_framework import filters
+from rest_framework import filters as restfilters
 from django_filters import rest_framework as filters
+from django.db.models import Q
 
 
 def index(request):
@@ -60,19 +61,21 @@ class ReservationDetail(generics.RetrieveDestroyAPIView):
     serializer_class = ReservationSerializer
 
 
+#not fully working
 class ReservationAvailable(APIView):
 
     def get(self, request, seats_count, format=None):
-        tables = Table.objects.filter(seats_count__lte=seats_count)
-        serializer = TableSerializer(tables, many=True)
+        start_of_today = datetime.now().replace(hour=12,minute=0,second=0,microsecond=0)
+        reservations = Reservation.objects.filter(table__seats_count=seats_count).filter(timespan__startswith__gte=start_of_today)
+        print(reservations)
+        serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data)
-
 
 class ReservationToday(generics.ListAPIView):
     start_of_today = datetime.now().replace(hour=12,minute=0,second=0,microsecond=0)
     queryset = Reservation.objects.filter(timespan__startswith__gte=start_of_today)
     serializer_class = ReservationSerializer
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [restfilters.OrderingFilter]
     ordering_fields = ['timespan']
 
 
