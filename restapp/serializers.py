@@ -17,4 +17,4 @@ class TableSerializer(serializers.ModelSerializer):
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
-        fields = ['table', 'timespan']
+        fields = ['id','table', 'timespan']
