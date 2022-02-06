@@ -11,6 +11,9 @@ from restapp.models import Table,Reservation
 from restapp.serializers import TableSerializer,ReservationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from psycopg2.extras import DateTimeRange
+from datetime import datetime
+from rest_framework import filters
 
 def index(request):
     return HttpResponse("Welcome to Rest4Health,  Your healthy restaurant!")
@@ -50,23 +53,19 @@ class ReservationAvailable(APIView):
 
     def get(self, request, seats_count, format=None):
         print("test print"+str(seats_count))
-
+        ordering_fields = ('timespan')
         tables = Table.objects.filter(seats_count__lte=seats_count)
         print(tables)
         serializer = TableSerializer(tables, many=True)
         return Response(serializer.data)
 
-"""     def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT) """
+class ReservationToday(generics.ListAPIView):
+    start_of_today = datetime.now().replace(hour=12,minute=0,second=0,microsecond=0)
+    queryset = Reservation.objects.filter(timespan__startswith__gte=start_of_today)
+    serializer_class = ReservationSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['timespan']
+
 
 
