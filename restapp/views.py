@@ -32,7 +32,7 @@ class TableList(generics.ListCreateAPIView):
 class TableDetail(generics.RetrieveDestroyAPIView):
     queryset = Table.objects.all()
     print("============")
-    #print(queryset[0].reservation_set[0].id)
+    print(queryset[0].reservation_set.all()[0].timespan.upper.year)
     serializer_class = TableSerializer
 
 
