@@ -36,8 +36,6 @@ class TableList(generics.ListCreateAPIView):
 
 class TableDetail(generics.RetrieveDestroyAPIView):
     queryset = Table.objects.all()
-    print("============")
-    print(queryset[0].reservation_set.all()[0].timespan.upper.year)
     serializer_class = TableSerializer
 
 
@@ -65,10 +63,7 @@ class ReservationDetail(generics.RetrieveDestroyAPIView):
 class ReservationAvailable(APIView):
 
     def get(self, request, seats_count, format=None):
-        print("test print"+str(seats_count))
-        #ordering_fields = ('timespan')
         tables = Table.objects.filter(seats_count__lte=seats_count)
-        print(tables)
         serializer = TableSerializer(tables, many=True)
         return Response(serializer.data)
 
