@@ -16,7 +16,7 @@ class Table(models.Model):
                                        MaxValueValidator(MAX_SEATS_COUNT)])
 
 class Reservation(models.Model):
-    table = models.ForeignKey('Table', on_delete=models.RESTRICT)
+    table = models.ForeignKey(Table, on_delete=models.RESTRICT)
     timespan = DateTimeRangeField()
 
     class Meta:
