@@ -127,11 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-.DS_Store
-.DS_Store?
-restapp/.DS_Store
-.DS_Store
-.DS_Store
-restapp/.DS_Store
-restapp/.DS_Store
-.env*
+
+*.DS_Store
+.env
+
+data

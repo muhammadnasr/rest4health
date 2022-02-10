@@ -1,4 +1,9 @@
+#To clear everything about docker
 #docker system prune -a --volumes
+
+#to refrsh requirements.txt
+#pip3 freeze > requirements.txt
+
 FROM python:3.9-alpine
 
 # set environment variables
@@ -33,5 +38,3 @@ RUN adduser -D user
 
 USER user
 
-# run entrypoint.sh
-ENTRYPOINT ["/app/entrypoint.sh"]
