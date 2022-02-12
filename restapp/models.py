@@ -4,6 +4,7 @@ from django.contrib.postgres.constraints import ExclusionConstraint
 from django.contrib.postgres.fields import DateTimeRangeField, RangeOperators,IntegerRangeField
 from django.contrib.postgres.validators import MinValueValidator, MaxValueValidator
 from psycopg2.extras import NumericRange
+from django.contrib.postgres.indexes import GistIndex
 
 # Create your models here.
     
@@ -36,4 +37,7 @@ class Reservation(models.Model):
                     ('table', RangeOperators.EQUAL),
                 ]
             ),
+        ]
+        indexes = [
+            (GistIndex(fields=['timespan'])),
         ]
