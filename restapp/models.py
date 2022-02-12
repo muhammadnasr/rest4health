@@ -1,4 +1,5 @@
-from datetime import datetime
+from time import time
+from django.utils import timezone
 from django.db import models
 from django.contrib.postgres.constraints import ExclusionConstraint
 from django.contrib.postgres.fields import DateTimeRangeField, RangeOperators,IntegerRangeField
@@ -19,11 +20,11 @@ class Table(models.Model):
 class Reservation(models.Model):
     @staticmethod
     def start_of_day():
-        return datetime.now().replace(hour=12,minute=0,second=0,microsecond=0)
+        return timezone.now().replace(hour=12,minute=0,second=0,microsecond=0)
 
     @staticmethod
     def end_of_day():
-        return datetime.now().replace(hour=23,minute=59,second=0,microsecond=0)
+        return timezone.now().replace(hour=23,minute=59,second=0,microsecond=0)
 
     table = models.ForeignKey(Table, on_delete=models.RESTRICT)
     timespan = DateTimeRangeField()

@@ -15,7 +15,13 @@ class TableSerializer(serializers.ModelSerializer):
         fields = ['number', 'seats_count']
 
 class ReservationSerializer(serializers.ModelSerializer):
-    
+    def validate(self, data):
+        if data['timespan'].lower.time() < Reservation.start_of_day().time():
+            raise serializers.ValidationError("cannot reserver before restaurant start time")
+        if data['timespan'].upper.time() > Reservation.end_of_day().time():
+            raise serializers.ValidationError("cannot reserver after restaurant finish time")
+        return data
+
     class Meta:
         model = Reservation
         fields = ['id','table','timespan']

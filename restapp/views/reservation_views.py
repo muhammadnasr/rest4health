@@ -16,6 +16,7 @@ from psycopg2.extras import DateTimeRange
 from rest_framework import filters as restfilters
 from django_filters import rest_framework as filters
 from django.db.models import Q
+from rest_framework import status
 
 class TimespanFilter(filters.FilterSet):
     timespan = filters.DateFromToRangeFilter()
@@ -27,11 +28,19 @@ class TimespanFilter(filters.FilterSet):
             "table",
         ]   
 
-class ReservationList(generics.ListCreateAPIView):
-    queryset = Reservation.objects.all()
-    serializer_class = ReservationSerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filter_class = TimespanFilter
+class ReservationList(APIView):
+
+    def get(self, request, format=None):
+        reservations = Reservation.objects.all()
+        serializer = ReservationSerializer(reservations, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ReservationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ReservationDetail(generics.RetrieveDestroyAPIView):
     queryset = Reservation.objects.all()
@@ -84,7 +93,7 @@ class ReservationAvailable(APIView):
 
 class ReservationToday(generics.ListAPIView):
 
-    queryset = Reservation.objects.filter(timespan__startswith__gte= datetime.now().replace(hour=12,minute=0,second=0,microsecond=0))
+    queryset = Reservation.objects.filter(timespan__startswith__gte= Reservation.start_of_day())
     serializer_class = ReservationSerializer
     filter_backends = [restfilters.OrderingFilter]
     ordering_fields = ['timespan']
