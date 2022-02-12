@@ -17,29 +17,6 @@ from rest_framework import filters as restfilters
 from django_filters import rest_framework as filters
 from django.db.models import Q
 
-
-def index(request):
-    return HttpResponse("Welcome to Rest4Health,  Your healthy restaurant!")
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class TableList(generics.ListCreateAPIView):
-    queryset = Table.objects.all()
-    serializer_class = TableSerializer
-
-
-class TableDetail(generics.RetrieveDestroyAPIView):
-    queryset = Table.objects.all()
-    serializer_class = TableSerializer
-
-
 class TimespanFilter(filters.FilterSet):
     timespan = filters.DateFromToRangeFilter()
 
@@ -48,7 +25,7 @@ class TimespanFilter(filters.FilterSet):
         fields = [
             "timespan",
             "table",
-        ]
+        ]   
 
 class ReservationList(generics.ListCreateAPIView):
     queryset = Reservation.objects.all()
@@ -111,6 +88,3 @@ class ReservationToday(generics.ListAPIView):
     serializer_class = ReservationSerializer
     filter_backends = [restfilters.OrderingFilter]
     ordering_fields = ['timespan']
-
-
-

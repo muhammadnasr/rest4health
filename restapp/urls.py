@@ -1,25 +1,26 @@
 from django.urls import include, path
-from . import views
+from .views import reservation_views
+from .views import tables_views
 from rest_framework import routers
-from restapp import views
+from restapp.views import reservation_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+router.register(r'users', tables_views.UserViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', tables_views.index, name='index'),
 
-    path('tables/', views.TableList.as_view()),
-    path('tables/<int:pk>/', views.TableDetail.as_view()),
+    path('tables/', tables_views.TableList.as_view()),
+    path('tables/<int:pk>/', tables_views.TableDetail.as_view()),
 
-    path('reservations/', views.ReservationList.as_view()),
-    path('reservations/<int:pk>/', views.ReservationDetail.as_view()),
-    path('reservations/available/<int:seats_count>/', views.ReservationAvailable.as_view()),
-    path('reservations/today/', views.ReservationToday.as_view()),
+    path('reservations/', reservation_views.ReservationList.as_view()),
+    path('reservations/<int:pk>/', reservation_views.ReservationDetail.as_view()),
+    path('reservations/available/<int:seats_count>/', reservation_views.ReservationAvailable.as_view()),
+    path('reservations/today/', reservation_views.ReservationToday.as_view()),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

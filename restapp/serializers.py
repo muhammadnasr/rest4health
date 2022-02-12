@@ -15,8 +15,7 @@ class TableSerializer(serializers.ModelSerializer):
         fields = ['number', 'seats_count']
 
 class ReservationSerializer(serializers.ModelSerializer):
-    #table = TableSerializer( read_only=True)
-
+    
     class Meta:
         model = Reservation
         fields = ['id','table','timespan']
