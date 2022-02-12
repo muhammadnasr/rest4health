@@ -12,7 +12,6 @@ router.register(r'users', views.UserViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', views.index, name='index'),
-    #path('', include(router.urls)),
 
     path('tables/', views.TableList.as_view()),
     path('tables/<int:pk>/', views.TableDetail.as_view()),
