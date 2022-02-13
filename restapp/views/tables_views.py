@@ -16,6 +16,7 @@ from psycopg2.extras import DateTimeRange
 from rest_framework import filters as restfilters
 from django_filters import rest_framework as filters
 from django.db.models import Q
+from rest_framework import permissions
 
 
 def index(request):
@@ -27,15 +28,17 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class TableList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAdminUser]
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
 
 class TableDetail(generics.RetrieveDestroyAPIView):
+    permission_classes = [permissions.IsAdminUser]
     queryset = Table.objects.all()
     serializer_class = TableSerializer
 
