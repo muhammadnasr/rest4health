@@ -1,3 +1,4 @@
+
 # Welcome to Rest4Health!
 
 This is my first project in Python. It is built with Django and it is dockerized.
@@ -12,7 +13,11 @@ This is my first project in Python. It is built with Django and it is dockerized
 
 ## Requirements and Implementation Notes
 
-Check this [document](https://docs.google.com/document/d/1jm6cwlpYVb9SHmYEJFcpBAQ1VcpZvH5_uRmAkvUH8fE/edit?usp=sharing) for find list of all requirements (non-functional and functional).
-I also have put some notes regarding some of the requirements and design decisions 
+Check this [document](https://docs.google.com/document/d/1jm6cwlpYVb9SHmYEJFcpBAQ1VcpZvH5_uRmAkvUH8fE/edit?usp=sharing) for find list of all requirements (non-functional and functional) and documentation if needed.
+
+I also have put some notes in the document regarding some of the requirements and design decisions.
+You will find minimal documentation as the code is very clear and following best practices and Django standards. 
+> The Best Code is No Code At All
+
 
 
