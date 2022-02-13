@@ -71,7 +71,7 @@ class ReservationList(APIView):
 
     def get_permissions(self):
         """
-        Handling customer persmissions be method is not straigt forward and the documentation example is simply not working
+        Handling custom persmissions be method is not straight forward and the documentation example is simply not working
         """
         if self.request.method == 'POST':
             permission_classes = [permissions.IsAuthenticated]
