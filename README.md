@@ -12,7 +12,7 @@ This is my first project in Python. It is built with Django and it is dockerized
 
 ## Requirements and Implementation Notes
 
-Check this [document](https://docs.google.com/document/d/1jm6cwlpYVb9SHmYEJFcpBAQ1VcpZvH5_uRmAkvUH8fE/edit?usp=sharing) for find list of all requirements (non-functional and function).
+Check this [document](https://docs.google.com/document/d/1jm6cwlpYVb9SHmYEJFcpBAQ1VcpZvH5_uRmAkvUH8fE/edit?usp=sharing) for find list of all requirements (non-functional and functional).
 I also have put some notes regarding some of the requirements and design decisions 
 
 
